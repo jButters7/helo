@@ -2,4 +2,4 @@ INSERT INTO users
 (username, password)
 VALUES
 ($1, $2)
-RETURNING id, username;
+RETURNING username, id, profile_pic;

@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const massive = require('massive');
 const authCtrl = require('./authController');
+const ctrl = require('./controller');
 
 const app = express();
 
@@ -12,6 +13,11 @@ app.use(express.json());
 //Authorize endpoints
 app.post('/auth/register', authCtrl.register);
 app.post('/auth/login', authCtrl.login);
+
+//Post Endpoints
+app.get('/api/posts/', ctrl.getAllPosts);
+app.get('/api/searchAllPosts', ctrl.searchAllPosts);
+// app.get('/api/posts/:userid', ctrl.getSearchedPosts)
 
 
 massive({
