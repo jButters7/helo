@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 
 const Nav = () => {
   return (
-    <Nav>
-      {/* <Link to='/dashboard'>Home</Link>
+    <div>
+      <Link to='/dashboard'>Home</Link>
       <Link to='/new'>New Post</Link>
-      <Link to='/'>Logout</Link> */}
-    </Nav>
+      <Link to='/'>Logout</Link>
+    </div>
   )
 }
 
