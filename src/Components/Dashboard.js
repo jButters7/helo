@@ -9,7 +9,7 @@ class Dashboard extends Component {
 
     this.state = {
       search: '',
-      isMyPost: true,
+      userPosts: true,
       posts: []
     }
   }
@@ -18,57 +18,51 @@ class Dashboard extends Component {
     this.getPosts();
   }
 
+
+  setSearchState(e) {
+    this.setState({
+      search: e.target.value
+    })
+  }
+
+  setUserPostsState() {
+    const { userPosts } = this.state;
+    this.setState({
+      userPosts: !userPosts
+    })
+    // console.log(this.props.username, this.props.id)
+  }
+
   getPosts = () => {
     axios.get('/api/posts').then(res => {
-      console.log(res.data)
+      // console.log('getPosts', res.data)
       this.setState({
         posts: res.data,
       })
     })
   }
 
-  handleChange(e) {
-    this.setState({
-      search: e.target.value
-    })
-  }
-
-  handleMyPost() {
-    const { isMyPost } = this.state
-    if (isMyPost) {
-      this.setState({
-        isMyPost: false
-      })
-    } else {
-      this.setState({
-        isMyPost: true
-      })
-    }
-    console.log(this.props.username, this.props.id)
-  }
 
   searchPosts = () => {
-    const { isMyPost, search } = this.state
+    const { userPosts, search } = this.state;
+    const { id } = this.props;
     console.log("search", search)
-    if (isMyPost) {
-      console.log('hit999')
-      axios.get(`/api/searchAllPosts`, { search }).then(res => {
-        console.log(res.data)
-        this.setState({
-          posts: res.data,
-        })
+    axios.get(`/api/posts/${search}/${id}/${userPosts}`).then(res => {
+      console.log(res.data)
+      this.setState({
+        posts: res.data,
       })
-        .catch(err => console.log(err.message))
-    }
+    }).catch(err => console.log(err.message))
+
   }
 
   render() {
     // console.log(this.state)
     return (
       <div>
-        <input type='text' placeholder='Search Posts' onChange={e => this.handleChange(e)} />
+        <input type='text' placeholder='Search Posts' onChange={e => this.setSearchState(e)} />
         <button onClick={() => this.searchPosts()}>Search</button>
-        <input type='checkbox' defaultChecked onClick={() => this.handleMyPost()} />
+        <input type='checkbox' defaultChecked onClick={() => this.setUserPostsState()} />
         My Post
         <div>
           {this.state.posts.map(element => {

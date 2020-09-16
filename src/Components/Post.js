@@ -3,10 +3,11 @@ import React, { Component } from 'react'
 class Post extends Component {
 
   render() {
-    const { title, img, content } = this.props.data;
+    const { title, img, content, username } = this.props.data;
     return (
       <div>
-        <div>Title: {title}</div>
+        <h2>Title: {title}</h2>
+        <p>Username: {username}</p>
         <img src={img} alt={title} />
         <p>Content: {content}</p>
       </div>

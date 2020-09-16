@@ -16,7 +16,9 @@ app.post('/auth/login', authCtrl.login);
 
 //Post Endpoints
 app.get('/api/posts/', ctrl.getAllPosts);
-app.get('/api/searchAllPosts', ctrl.searchAllPosts);
+app.get('/api/posts/:search/:authorId/:userPosts', ctrl.searchPosts);
+// app.get('/api/searchAllPosts/:search', ctrl.searchAllPosts);
+// app.get(`/api/searchAllPosts/:id/:search`, ctrl.searchWithoutMyPosts)
 // app.get('/api/posts/:userid', ctrl.getSearchedPosts)
 
 
