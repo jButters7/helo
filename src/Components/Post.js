@@ -6,7 +6,7 @@ class Post extends Component {
     const { title, img, content, username } = this.props.data;
     return (
       <div>
-        <h2>Title: {title}</h2>
+        <h2>{title}</h2>
         <p>Username: {username}</p>
         <img src={img} alt={title} />
         <p>Content: {content}</p>

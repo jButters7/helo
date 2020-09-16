@@ -38,6 +38,7 @@ class Dashboard extends Component {
       // console.log('getPosts', res.data)
       this.setState({
         posts: res.data,
+        search: ''
       })
     })
   }
@@ -60,8 +61,9 @@ class Dashboard extends Component {
     // console.log(this.state)
     return (
       <div>
-        <input type='text' placeholder='Search Posts' onChange={e => this.setSearchState(e)} />
+        <input value={this.state.search} type='text' placeholder='Search Posts' onChange={e => this.setSearchState(e)} />
         <button onClick={() => this.searchPosts()}>Search</button>
+        <button onClick={() => this.getPosts()}>Reset</button>
         <input type='checkbox' defaultChecked onClick={() => this.setUserPostsState()} />
         My Post
         <div>
