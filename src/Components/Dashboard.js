@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import Post from './Post';
+// import Post from './Post';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+
 
 class Dashboard extends Component {
   constructor() {
@@ -17,7 +19,6 @@ class Dashboard extends Component {
   componentDidMount() {
     this.getPosts();
   }
-
 
   setSearchState(e) {
     this.setState({
@@ -43,7 +44,6 @@ class Dashboard extends Component {
     })
   }
 
-
   searchPosts = () => {
     const { userPosts, search } = this.state;
     const { id } = this.props;
@@ -54,7 +54,6 @@ class Dashboard extends Component {
         posts: res.data,
       })
     }).catch(err => console.log(err.message))
-
   }
 
   render() {
@@ -68,7 +67,19 @@ class Dashboard extends Component {
         My Post
         <div>
           {this.state.posts.map(element => {
-            return <Post key={element.id} data={element} />
+            return (
+              <Link to={{
+                pathname: `/post/${element.id}`,
+              }
+              }>
+                <div className='dash-post'>
+                  <h2>{element.title}</h2>
+                  <p>Username: {element.username}</p>
+                  <img src={element.profile_pic} alt={element.username} />
+                </div>
+                {/* <Post key={element.id} data={element} /> */}
+              </Link>
+            )
           })}
         </div>
       </div>
