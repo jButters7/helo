@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 
 class Form extends Component {
   constructor() {
@@ -18,12 +18,12 @@ class Form extends Component {
       [e.target.name]: e.target.value
     });
   }
-  // console.log(this.props.id)
+  // console.log(this.props.id);
 
   addPost() {
     const { title, img, content } = this.state
-    const author_id = this.props.id;
-    axios.post(`/api/posts/`, { author_id, title, img, content }).then(res => {
+    // const author_id = this.props.id;
+    axios.post(`/api/posts/`, { title, img, content }).then(res => {
       console.log(res.data)
     })
     this.setState({
@@ -57,6 +57,6 @@ class Form extends Component {
   }
 };
 
-const mapStateToProps = reduxState => reduxState
+// const mapStateToProps = reduxState => reduxState;
 
-export default connect(mapStateToProps)(Form);
+export default Form;

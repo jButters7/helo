@@ -8,17 +8,17 @@ module.exports = {
     const [user] = await db.check_user([username]);
 
     if (user) {
-      return res.status(409).send('user already exists')
+      return res.status(409).send('user already exists');
     }
 
     const salt = bcrypt.genSaltSync(10);
-    const hash = bcrypt.hashSync(password, salt)
+    const hash = bcrypt.hashSync(password, salt);
 
-    const [newUser] = await db.register_user([username, hash])
+    const [newUser] = await db.register_user([username, hash]);
 
-    res.status(200).send(newUser);
+    req.session.user = newUser;
 
-
+    res.status(201).send(req.session.user);
   },
 
   login: async (req, res) => {
@@ -28,7 +28,7 @@ module.exports = {
     const [existingUser] = await db.check_user([username]);
 
     if (!existingUser) {
-      return res.status(404).send('Username not found')
+      return res.status(404).send('Username not found');
     }
 
     const isAuthenticated = bcrypt.compareSync(password, existingUser.password);
@@ -39,7 +39,24 @@ module.exports = {
 
     delete existingUser.password;
 
-    res.status(200).send(existingUser)
+    req.session.user = existingUser;
 
+    res.status(200).send(req.session.user);
+
+  },
+
+  logout: (req, res) => {
+    req.session.destroy();
+    console.log('hit')
+    res.sendStatus(200)
+  },
+
+  getUser: async (req, res) => {
+    const db = req.app.get('db');
+    if (req.session.user) {
+      const [currentUser] = await db.get_user_info(req.session.user.id)
+      console.log(currentUser)
+      res.status(200).send(currentUser)
+    }
   }
 }

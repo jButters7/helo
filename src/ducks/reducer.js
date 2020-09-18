@@ -7,7 +7,7 @@ const initialState = {
 const LOGIN_USER = 'LOGIN_USER';
 
 export function loginUser(username, id, profile_pic) {
-  console.log('hit')
+  console.log('going through', username)
   return {
     type: LOGIN_USER,
     payload: {

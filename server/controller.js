@@ -9,15 +9,15 @@ module.exports = {
 
   searchPosts: async (req, res) => {
     const db = req.app.get('db')
-    const { search, authorId, userPosts } = req.params
-    console.log("con search", search);
-    console.log(req.params)
+    const { search, userPosts } = req.params
+    const { id } = req.session.user
+    const sessionAuthorId = id;
 
     let posts = [];
     if (userPosts === 'true') {
-      posts = await db.search_user_posts(authorId, search);
+      posts = await db.search_user_posts(sessionAuthorId, search);
     } else {
-      posts = await db.search_other_posts(authorId, search);
+      posts = await db.search_other_posts(sessionAuthorId, search);
     }
     console.log(posts);
     res.status(200).send(posts);
@@ -32,8 +32,10 @@ module.exports = {
 
   addPost: async (req, res) => {
     const db = req.app.get('db');
-    const { author_id, title, img, content } = req.body;
-    await db.add_new_post(author_id, title, img, content);
+    const { id } = req.session.user
+    const sessionAuthorId = id;
+    const { title, img, content } = req.body;
+    await db.add_new_post(sessionAuthorId, title, img, content);
     res.sendStatus(200);
   },
 
