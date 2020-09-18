@@ -18,7 +18,7 @@ app.post('/auth/login', authCtrl.login);
 app.get('/api/posts/', ctrl.getAllPosts);
 app.get('/api/posts/:search/:authorId/:userPosts', ctrl.searchPosts);
 app.get('/api/posts/:id', ctrl.getOnePost);
-app.post('/api/post/:id', ctrl.addPost);
+app.post('/api/posts/', ctrl.addPost);
 app.delete('/api/post/:id', ctrl.deletePost);
 
 

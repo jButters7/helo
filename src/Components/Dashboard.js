@@ -35,7 +35,7 @@ class Dashboard extends Component {
   }
 
   getPosts = () => {
-    axios.get('/api/posts').then(res => {
+    axios.get('/api/posts/').then(res => {
       // console.log('getPosts', res.data)
       this.setState({
         posts: res.data,
@@ -67,6 +67,7 @@ class Dashboard extends Component {
         My Post
         <div>
           {this.state.posts.map(element => {
+            console.log(element)
             return (
               <Link to={{
                 pathname: `/post/${element.id}`,

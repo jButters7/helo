@@ -32,40 +32,17 @@ module.exports = {
 
   addPost: async (req, res) => {
     const db = req.app.get('db');
-    const { id } = req.params;
-    const { title, img, content } = req.body;
-    await db.add_new_post(id, title, img, content);
+    const { author_id, title, img, content } = req.body;
+    await db.add_new_post(author_id, title, img, content);
     res.sendStatus(200);
   },
 
   deletePost: async (req, res) => {
     const db = req.app.get('db');
     const { id } = req.params;
-    console.log('backend')
-    await db.delete_post(id);
-    console.log('backside 2')
-    console.log(res.data);
-    res.status(200).send(res.data);
+    console.log(id)
+    const deleted = await db.delete_post(id);
+    console.log(deleted)
+    res.status(200).send(deleted);
   }
-
-
-  // searchAllPosts: async (req, res) => {
-  //   const db = req.app.get('db')
-  //   console.log("req.params=", req.params)
-  //   const { search } = req.params
-  //   console.log("con search", search)
-  //   const searchedPosts = await db.search_all_posts(search);
-  //   console.log("searched posts", searchedPosts)
-  //   res.status(200).send(searchedPosts)
-  // },
-
-  // searchWithoutMyPosts: async (req, res) => {
-  //   const db = req.app.get('db')
-  //   const { id, search } = req.params;
-
-  //   const posts = await db.search_without_my_posts([id, search])
-  //   res.status(200).send(searchedPosts)
-  // }
-
-
 }

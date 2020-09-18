@@ -22,7 +22,8 @@ class Form extends Component {
 
   addPost() {
     const { title, img, content } = this.state
-    axios.post(`/api/post/${this.props.id}`, { title, img, content }).then(res => {
+    const author_id = this.props.id;
+    axios.post(`/api/posts/`, { author_id, title, img, content }).then(res => {
       console.log(res.data)
     })
     this.setState({

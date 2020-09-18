@@ -20,8 +20,11 @@ class Post extends Component {
   }
 
   getOnePost() {
-    const { postid } = this.props.match.params
-    axios.get(`/api/posts/${postid}`).then(res => {
+    let { postid } = this.props.match.params
+    const postIdNum = Number(postid);
+    console.log(this.props);
+    console.log(postIdNum);
+    axios.get(`/api/posts/${postIdNum}`).then(res => {
       console.log(res.data)
       const { title, img, content, username, profile_pic, author_id } = res.data[0]
       this.setState({
@@ -37,8 +40,11 @@ class Post extends Component {
 
   deletePost() {
     const { postid } = this.props.match.params
-    // console.log(postid)
-    axios.delete(`/api/post/${postid}`).then(res => {
+    console.log(this.props)
+    console.log('postid', postid)
+    const id = Number(postid);
+    console.log('id', id)
+    axios.delete(`/api/post/${id}`).then(res => {
       console.log(res.data)
     })
     this.props.history.push('/dashboard');
@@ -46,7 +52,6 @@ class Post extends Component {
 
   render() {
     const { title, img, content, author, authorPicture } = this.state;
-    // console.log(this.state.author, this.props.id)
     return (
       <div>
         <h2>{title}</h2>
