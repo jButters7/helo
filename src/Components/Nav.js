@@ -14,7 +14,6 @@ class Nav extends Component {
   async componentDidMount() {
     const currentUser = await axios.get('/api/auth/me')
     this.props.loginUser(currentUser.data.username, currentUser.data.id, currentUser.data.profile_pic)
-
   }
 
   async logout() {

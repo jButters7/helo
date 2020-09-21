@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import '../Dashboard.css';
+import { connect } from 'react-redux';
 
 class Dashboard extends Component {
   constructor() {
@@ -15,6 +16,9 @@ class Dashboard extends Component {
   }
 
   async componentDidMount() {
+    if (!this.props.id) {
+      return this.props.history.push('/')
+    }
     const asyncResponse = await axios.get('/api/auth/me')
     if (typeof asyncResponse.data.id === typeof 1) {
       return this.getPosts();
@@ -76,7 +80,7 @@ class Dashboard extends Component {
         <div className='post-container'>
           {this.state.posts.map(element => {
             return (
-              <Link to={{ pathname: `/post/${element.id}` }} className="post-link">
+              <Link to={{ pathname: `/post/${element.id}` }} className="post-link" key={element.id}>
                 <div className='dash-post'>
 
                   <h2>{element.title}</h2>
@@ -99,4 +103,6 @@ class Dashboard extends Component {
 //   return reduxState
 // }
 
-export default Dashboard;
+const mapStateToProps = reduxState => reduxState;
+
+export default connect(mapStateToProps)(Dashboard);
