@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-// import Post from './Post';
-// import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import '../Dashboard.css';
-
 
 class Dashboard extends Component {
   constructor() {
@@ -17,20 +14,22 @@ class Dashboard extends Component {
     }
   }
 
-  componentDidMount() {
-    axios.get('/api/auth/me').then(res => {
-      // console.log('What now?', res.data.id)
-      if (res.data.id) {
-        return this.getPosts();
-      }
-    }).catch(err => {
-      console.log(err.message)
-      // return this.props.history.push('/')
+  async componentDidMount() {
+    const asyncResponse = await axios.get('/api/auth/me')
+    if (typeof asyncResponse.data.id === typeof 1) {
+      return this.getPosts();
+    } else {
+      return this.props.history.push('/')
     }
-    )
-    //if there is no one on session this will cause the page to go to the login screen. 
-    // this.props.history.push('/')
+  }
 
+  getPosts = () => {
+    axios.get('/api/posts/').then(res => {
+      this.setState({
+        posts: res.data,
+        search: ''
+      });
+    });
   }
 
   setSearchState(e) {
@@ -44,16 +43,6 @@ class Dashboard extends Component {
     this.setState({
       userPosts: !userPosts
     })
-  }
-
-  getPosts = () => {
-    axios.get('/api/posts/').then(res => {
-      // console.log('getPosts', res.data)
-      this.setState({
-        posts: res.data,
-        search: ''
-      });
-    });
   }
 
   searchPosts = () => {

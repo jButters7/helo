@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { loginUser } from '../ducks/reducer';
+import { loginUser, logoutUser } from '../ducks/reducer';
 import axios from 'axios';
 import './nav.css';
 import home_logo from '../assets/home_logo.png';
@@ -9,42 +9,22 @@ import new_logo from '../assets/new_logo.png';
 import shut_down from '../assets/shut_down.png';
 
 class Nav extends Component {
-  constructor() {
-    super();
 
-    this.state = {
-      userIdOnSession: null
-    }
+  //this function passes the users information up to the reducer. 
+  async componentDidMount() {
+    const currentUser = await axios.get('/api/auth/me')
+    this.props.loginUser(currentUser.data.username, currentUser.data.id, currentUser.data.profile_pic)
+
   }
 
-  componentDidMount() {
-    this.getCurrentUser();
-  }
-
-  getCurrentUser() {
-    axios.get('/api/auth/me').then(res => {
-      console.log(res.data)
-      this.setState({
-        userIdOnSession: res.data.id
-      })
-      this.props.loginUser(res.data.username, res.data.id, res.data.profile_pic)
-    })
-  }
-
-  logout() {
-    axios.delete('/auth/logout').then(() => {
-      this.getCurrentUser()
-      //this causes the nav bar to de-render when user logs out.
-      this.setState({
-        userIdOnSession: null
-      })
-    })
+  async logout() {
+    await axios.delete('/auth/logout')
+    this.props.logoutUser();
   }
 
   render() {
-    const { userIdOnSession } = this.state
-    // console.log(userIdOnSession)
-    if (userIdOnSession) {
+    //checks to see if there is a user. Then renders the Nav if there is. 
+    if (this.props.id) {
       return (
         <div className='Nav'>
           <img className='profile-image' src={this.props.profile_pic ? this.props.profile_pic : `https://robohash.org/${this.props.username}.png`} alt={this.props.username} />
@@ -61,4 +41,4 @@ class Nav extends Component {
 
 const mapStateToProps = (reduxState) => reduxState;
 
-export default connect(mapStateToProps, { loginUser })(Nav);
+export default connect(mapStateToProps, { loginUser, logoutUser })(Nav);

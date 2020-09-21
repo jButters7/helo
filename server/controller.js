@@ -3,7 +3,6 @@ module.exports = {
   getAllPosts: async (req, res) => {
     const db = req.app.get('db')
     const posts = await db.get_posts();
-    // console.log(posts)
     res.status(200).send(posts)
   },
 
@@ -19,7 +18,6 @@ module.exports = {
     } else {
       posts = await db.search_other_posts(sessionAuthorId, search);
     }
-    console.log(posts);
     res.status(200).send(posts);
   },
 
@@ -42,9 +40,7 @@ module.exports = {
   deletePost: async (req, res) => {
     const db = req.app.get('db');
     const { id } = req.params;
-    console.log(id)
     const deleted = await db.delete_post(id);
-    console.log(deleted)
     res.status(200).send(deleted);
   }
 }

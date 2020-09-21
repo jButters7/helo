@@ -39,8 +39,6 @@ module.exports = {
     delete existingUser.password;
 
     req.session.user = existingUser;
-
-    // console.log(req.session.user)
     res.status(200).send(req.session.user);
   },
 
@@ -48,7 +46,6 @@ module.exports = {
     const db = req.app.get('db');
     if (req.session.user) {
       const [currentUser] = await db.get_user_info(req.session.user.id)
-      console.log(currentUser)
       res.status(200).send(currentUser)
     }
   },
