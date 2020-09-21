@@ -1,0 +1,23 @@
+.Nav{
+  position: fixed;
+  align-items: center;
+  left: 0px;
+  right: 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  background-color: orange;
+  height: 100vh;
+  width: 100px;
+  box-shadow: 10px 0 20px 0 rgba(0,0,0,.1), 5px 0 5px rgba(0,0,0,.2);
+}
+
+.nav_img{
+  width: 40px;
+}
+
+.profile-image{
+  height: 80px;
+  width: 80px;
+}
+

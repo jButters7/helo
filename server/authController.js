@@ -36,19 +36,12 @@ module.exports = {
     if (!isAuthenticated) {
       return res.status(403).send('Incorrect email or password');
     }
-
     delete existingUser.password;
 
     req.session.user = existingUser;
 
+    // console.log(req.session.user)
     res.status(200).send(req.session.user);
-
-  },
-
-  logout: (req, res) => {
-    req.session.destroy();
-    console.log('hit')
-    res.sendStatus(200)
   },
 
   getUser: async (req, res) => {
@@ -58,5 +51,10 @@ module.exports = {
       console.log(currentUser)
       res.status(200).send(currentUser)
     }
+  },
+
+  logout: (req, res) => {
+    req.session.destroy();
+    res.sendStatus(200);
   }
 }

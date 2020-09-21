@@ -1,0 +1,39 @@
+.post-container{
+  background-color: white;
+  height: 60%;
+}
+
+.post-contents{
+  display: flex;
+  justify-content: space-between;
+}
+
+.post-img{
+  width: 200px;
+  background-color: yellow;
+}
+
+.header{
+  display: flex;
+  justify-content: space-between;
+}
+
+.author-delete{
+  display: flex;
+  flex-direction: column;
+}
+
+.author-img{
+  width: 60px;
+  border-radius: 100%;
+}
+
+.post-img{
+  max-width: 40%;
+  max-height: 40%;
+}
+
+.content{
+  width: 60%;
+  height: 100%;
+}

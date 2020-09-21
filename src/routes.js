@@ -7,6 +7,7 @@ import Post from './Components/Post';
 
 export default (
   <Switch>
+
     <Route exact path='/' component={Auth} />
     <Route exact path='/dashboard' component={Dashboard} />
     <Route exact path='/post/:postid' component={Post} />
